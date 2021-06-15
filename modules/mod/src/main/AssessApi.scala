@@ -226,7 +226,7 @@ final class AssessApi(
       // give up on correspondence games
       else if (game.isCorrespondence) fuccess(none)
       // stop here for short games
-      else if (game.playedTurns < 36) fuccess(none)
+      else if (game.playedTurns < 28) fuccess(none)
       // stop here for long games
       else if (game.playedTurns > 95) fuccess(none)
       // stop here for casual games
@@ -243,7 +243,7 @@ final class AssessApi(
         gameRepo.holdAlert game game map { holdAlerts =>
           if (Player.HoldAlert suspicious holdAlerts) HoldAlert.some
           // don't analyse most of other bullet games
-          else if (game.speed == chess.Speed.Bullet && randomPercent(70)) none
+          else if (game.speed == chess.Speed.Bullet && game.playedTurns >= 36 && randomPercent(70)) none
           // someone blurs a lot
           else if (game.players exists manyBlurs) Blurs.some
           // the winner shows a great rating progress
